@@ -27,11 +27,11 @@ public class Work  implements Callable<Foo>{
 		f.setName(String.valueOf( r.nextInt()));
 		try {
 			if(_id == 10) {
-				Thread.sleep(r.nextInt(3000));
+				Thread.sleep(1000);
 				//throw new IllegalStateException();
 			}
 			
-			Thread.sleep(r.nextInt(5000));
+			Thread.sleep(1000);
 			int a = 0;
 			List<Integer> lista = new ArrayList<Integer>();
 			for (int i = 0; i < 999999; i++) {
