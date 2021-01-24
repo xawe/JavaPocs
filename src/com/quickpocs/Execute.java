@@ -2,6 +2,8 @@ package com.quickpocs;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
@@ -15,6 +17,7 @@ public class Execute {
 		ExecutorService executor = Executors.newWorkStealingPool();				
 		List<Callable<Foo>> callables = new ArrayList<Callable<Foo>>();
 		long start = System.currentTimeMillis();
+		Collection<Foo> syncCollection = Collections.synchronizedCollection(new ArrayList<Foo>());
 		for (int i = 0; i < 50; i++) {
 			callables.add(new Work(i));
 		}			
@@ -23,7 +26,9 @@ public class Execute {
 				.stream()
 				.map(future -> {
 					try {
-						return future.get();
+						Foo itemRecebido = future.get();
+						syncCollection.add(itemRecebido);
+						return itemRecebido;
 					} catch (Exception e) {
 						System.out.println("Error -- " + e.getMessage());
 						throw new IllegalStateException(e);
@@ -35,6 +40,15 @@ public class Execute {
 		}		
 		long end = System.currentTimeMillis();		
 		System.out.println("Tempo decorrido " + (end - start));
+		
+		System.out.println("Exibindo não ativos");
+		Foo retorno = syncCollection
+			.stream()
+			.filter(x-> x.getActive().equals(Boolean.FALSE))
+			.findFirst()
+			.get();
+			
+		System.out.println(retorno.getId() + " -- " + retorno.getName());
 	}
 
 }

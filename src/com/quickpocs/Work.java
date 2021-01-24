@@ -28,6 +28,7 @@ public class Work  implements Callable<Foo>{
 		try {
 			if(_id == 10) {
 				Thread.sleep(1000);
+				f.setActive(false);
 				//throw new IllegalStateException();
 			}
 			
