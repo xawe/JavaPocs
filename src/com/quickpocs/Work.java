@@ -26,24 +26,12 @@ public class Work  implements Callable<Foo>{
 		f.setId( _id);				
 		f.setName(String.valueOf( r.nextInt()));
 		try {
-			if(_id == 10) {
-				Thread.sleep(1000);
+			if(_id == 10) {				
 				f.setActive(false);
 				//throw new IllegalStateException();
-			}
-			
-			Thread.sleep(1000);
-			int a = 0;
-			List<Integer> lista = new ArrayList<Integer>();
-			for (int i = 0; i < 999999; i++) {
-				//System.out.println(i);
-				a = i;
-				lista.add(i);
-			}
-			for (Integer integer : lista) {
-				a = integer;
-			}
-			//Thread.sleep(3000);		
+			}			
+			Thread.sleep(5000);
+					
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -18,17 +18,18 @@ public class Execute {
 	 * Exemplo de chamada de multiplas funções em paralelo usando Callable e syncronizedCollection 
 	 * para armazenamento dos resultados
 	 * WIP - pendente implementação e comparação usando CopyOnWriteArrayList
+	 * Media de 25 segundos 
 	 */
 	public static void main(String[] args) {		
 		ExecutorService executor = Executors.newWorkStealingPool();				
 		List<Callable<Foo>> callables = new ArrayList<Callable<Foo>>();
-		List<Foo> copyOnWriteArray = new CopyOnWriteArrayList<Foo>();
+		//List<Foo> copyOnWriteArray = new CopyOnWriteArrayList<Foo>();
 		
 		long start = System.currentTimeMillis();
 		Collection<Foo> syncCollection = Collections.synchronizedCollection(new ArrayList<Foo>());
 		for (int i = 0; i < 50; i++) {
 			callables.add(new Work(i));
-		}			
+		}					
 		try {
 			executor.invokeAll(callables)
 				.stream()
