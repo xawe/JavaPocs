@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import model.Foo;
 
@@ -22,15 +23,16 @@ public class ExecuteParallel {
 		for (int i = 0; i < 50; i++) {
 			ids.add(i);
 		}		
-		Collection<Foo> sCollection = Collections.synchronizedCollection(new ArrayList<Foo>());
-		ids
-			.parallelStream()
-			.forEach(p->{
-				sCollection.add(new SimpleWork(p).doWork());
-			});					
 		
-		long end = System.currentTimeMillis();		
+		List<Foo> items = ids
+			.parallelStream()
+			.map( p -> new SimpleWork(p).doWork())
+			.collect(Collectors.toList());							
+		
+		long end = System.currentTimeMillis();
+		System.out.println("Total de itens " + items.size());
 		System.out.println("Tempo decorrido " + (end - start));
+		
 
 	}
 
